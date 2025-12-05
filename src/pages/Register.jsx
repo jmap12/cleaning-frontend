@@ -1,21 +1,25 @@
 import React, { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
 import api from "../services/api";
-import { useNavigate } from "react-router-dom";
 
-function Register() {
+export default function Register() {
   const navigate = useNavigate();
 
   const [form, setForm] = useState({
-    name: "",
+    first_name: "",
+    last_name: "",
     email: "",
     phone: "",
     password: "",
-    role: "customer"
+    role: "customer",
   });
+
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
 
   const register = async (e) => {
     e.preventDefault();
-
     try {
       const res = await api.post("/auth/register", form);
       alert("Registration successful! Please subscribe.");
@@ -26,46 +30,102 @@ function Register() {
   };
 
   return (
-    <form onSubmit={register}>
-      <input
-        type="text"
-        placeholder="Full Name"
-        value={form.name}
-        onChange={(e) => setForm({ ...form, name: e.target.value })}
-      />
+    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+      <div className="bg-white shadow-lg rounded-2xl p-8 w-full max-w-md">
+        <h2 className="text-2xl font-bold text-center mb-4">Create Account</h2>
 
-      <input
-        type="email"
-        placeholder="Email"
-        value={form.email}
-        onChange={(e) => setForm({ ...form, email: e.target.value })}
-      />
+        <form onSubmit={register} className="space-y-4">
 
-      <input
-        type="tel"
-        placeholder="Phone"
-        value={form.phone}
-        onChange={(e) => setForm({ ...form, phone: e.target.value })}
-      />
+          {/* First Name */}
+          <div>
+            <label className="block mb-1">First Name</label>
+            <input
+              type="text"
+              name="first_name"
+              onChange={handleChange}
+              required
+              className="w-full border p-2 rounded-lg"
+            />
+          </div>
 
-      <input
-        type="password"
-        placeholder="Password"
-        value={form.password}
-        onChange={(e) => setForm({ ...form, password: e.target.value })}
-      />
+          {/* Last Name */}
+          <div>
+            <label className="block mb-1">Last Name</label>
+            <input
+              type="text"
+              name="last_name"
+              onChange={handleChange}
+              required
+              className="w-full border p-2 rounded-lg"
+            />
+          </div>
 
-      <select
-        value={form.role}
-        onChange={(e) => setForm({ ...form, role: e.target.value })}
-      >
-        <option value="customer">Customer</option>
-        <option value="cleaner">Cleaner</option>
-      </select>
+          {/* Email */}
+          <div>
+            <label className="block mb-1">Email</label>
+            <input
+              type="email"
+              name="email"
+              onChange={handleChange}
+              required
+              className="w-full border p-2 rounded-lg"
+            />
+          </div>
 
-      <button type="submit">Register</button>
-    </form>
+          {/* Phone */}
+          <div>
+            <label className="block mb-1">Phone Number</label>
+            <input
+              type="text"
+              name="phone"
+              onChange={handleChange}
+              required
+              className="w-full border p-2 rounded-lg"
+            />
+          </div>
+
+          {/* Password */}
+          <div>
+            <label className="block mb-1">Password</label>
+            <input
+              type="password"
+              name="password"
+              onChange={handleChange}
+              required
+              className="w-full border p-2 rounded-lg"
+            />
+          </div>
+
+          {/* Role */}
+          <div>
+            <label className="block mb-1">Register As</label>
+            <select
+              name="role"
+              onChange={handleChange}
+              className="w-full border p-2 rounded-lg"
+            >
+              <option value="customer">Customer</option>
+              <option value="cleaner">Cleaner</option>
+            </select>
+          </div>
+
+          {/* Submit Button */}
+          <button
+            type="submit"
+            className="w-full bg-blue-600 text-white p-2 rounded-lg hover:bg-blue-700"
+          >
+            Register
+          </button>
+        </form>
+
+        {/* Link to Login */}
+        <p className="text-center mt-4">
+          Already have an account?{" "}
+          <Link to="/login" className="text-blue-600 font-semibold">
+            Login here
+          </Link>
+        </p>
+      </div>
+    </div>
   );
 }
-
-export default Register;

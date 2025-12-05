@@ -16,7 +16,7 @@ const Layout = ({ children }) => {
 
       {/* ========== SIDEBAR ========== */}
       <div style={styles.sidebar}>
-        <h2 style={styles.logo}>Cleanify</h2>
+        <h2 style={styles.logo}>Coramdeo</h2>
 
         <div style={styles.userBox}>
           <p style={styles.userName}>

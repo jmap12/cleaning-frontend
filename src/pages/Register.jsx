@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import api from '../axios';
+import { registerUser } from "../services/auth";
 import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
@@ -14,8 +15,25 @@ const Register = () => {
     user_type: "customer"
   });
 
-  const handleChange = (e) =>
-    setForm({ ...form, [e.target.name]: e.target.value });
+  const handleSubmit = async (e) => {
+  e.preventDefault();
+  try {
+    await registerUser({
+      first_name,
+      last_name,
+      email,
+      phone,
+      password,
+      user_type
+    });
+
+    alert("Registration successful!");
+    navigate("/login");
+  } catch (err) {
+    alert("Registration error: " + err.message);
+  }
+};
+
 
   const register = async (e) => {
     e.preventDefault();

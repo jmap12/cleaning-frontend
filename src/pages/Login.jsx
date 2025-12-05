@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import api from '../axios';
 import { useNavigate } from 'react-router-dom';
+import { Link } from "react-router-dom";
+
 
 const Login = () => {
   const navigate = useNavigate();
@@ -35,8 +37,8 @@ const Login = () => {
           <input placeholder="Password" name="password" type="password" onChange={handle} required />
           <button style={styles.button}>Login</button>
         </form>
-
-        <p>No account? <a href="/register">Register</a></p>
+        
+        <p>No account? <Link to="/register">Register</Link></p>
       </div>
     </div>
   );

@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 
 import Register from './pages/Register';
 import Login from './pages/Login';
@@ -12,10 +12,11 @@ function DashboardRouter() {
   const saved = localStorage.getItem("user");
   const user = saved ? JSON.parse(saved) : null;
 
-  if (!user) return <Login />;
+  if (!user) return <Navigate to="/login" />;
 
   if (user.user_type === "admin") return <AdminDashboard />;
   if (user.user_type === "cleaner") return <DashboardCleaner />;
+  
   return <DashboardCustomer />;
 }
 
@@ -23,7 +24,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Login />} />
+        <Route path="/" element={<Navigate to="/login" />} />
 
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />

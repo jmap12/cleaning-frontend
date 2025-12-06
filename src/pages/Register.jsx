@@ -19,15 +19,20 @@ export default function Register() {
   };
 
   const register = async (e) => {
-    e.preventDefault();
-    try {
-      const res = await api.post("/auth/register", form);
-      alert("Registration successful! Please subscribe.");
-      navigate("/subscribe");
-    } catch (err) {
-      alert(err.response?.data?.error || "Registration error");
-    }
-  };
+  e.preventDefault();
+  try {
+    await api.post("/auth/register", form);
+
+    localStorage.setItem("new_user_email", form.email);
+    localStorage.setItem("new_user_password", form.password);
+
+    alert("Registration successful! Please login to continue.");
+    navigate("/login");  // <-- FIXED
+
+  } catch (err) {
+    alert(err.response?.data?.error || "Registration error");
+  }
+};
 
   return (
     <div style={styles.container}>

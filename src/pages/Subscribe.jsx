@@ -13,6 +13,13 @@ const Subscribe = () => {
       });
 
       alert("STK Push sent! Complete payment on your phone.");
+
+      setTimeout(() => {
+      alert("Payment received! Please log in again.");
+      navigate("/login");
+      }, 3000);
+
+
     } catch (err) {
       alert("Subscription payment error");
     }

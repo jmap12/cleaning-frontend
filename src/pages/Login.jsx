@@ -19,8 +19,15 @@ const Login = () => {
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("user", JSON.stringify(res.data.user));
 
+      if (!res.data.user.subscribed) {
+      alert("Please subscribe to continue.");
+      navigate("/subscribe");
+      return;
+      }
+
       alert("Login successful!");
-      navigate("/pages");
+      navigate("/dashboard");
+
 
     } catch (err) {
       alert(err.response?.data?.error || "Login error");
@@ -37,7 +44,7 @@ const Login = () => {
           <input placeholder="Password" name="password" type="password" onChange={handle} required />
           <button style={styles.button}>Login</button>
         </form>
-        
+
         <p>No account? <Link to="/register">Register</Link></p>
       </div>
     </div>
